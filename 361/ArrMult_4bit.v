@@ -14,8 +14,10 @@ module ArrMult_4bit(
   );
     wire [10:0] carry;
     wire [5:0] partialSum;
+
     //Partial Products
     wire [3:0] pp [0:3];
+
     //Asign Patrial Products
     //row 0
     mux2to1 m00(.a(a[0]), .b(1'b0), .sel(b[0]), .out(pp[0][0]));
@@ -25,17 +27,18 @@ module ArrMult_4bit(
     //row 1
     //row 2
     //row 3
+
     //Assign Adding Circuit
     //sum 0
     assign prod[0] = pp[0][0];
     //sum 1
     HA h0(.a(pp[1][0]), .b(pp[0][1]), .c_out(carry[0]), .sum(prod[1]));
     //sum 2
-    FA f0(.a(pp[1][1]), .b(pp[0]
-      [2]), .c_in(carry[0]), .c_out(carry[1]), .sum(partialSum[0]));
+    FA f0(.a(pp[1][1]), .b(pp[0][2]), .c_in(carry[0]), .c_out(carry[1]), .sum(partialSum[0]));
     HA h1(.a(pp[2][0]), .b(partialSum[0]), .c_out(carry[2]), .sum(prod[2]));
     //sum 3
     //sum 4
     //sum 5
     //sum 6 & sum 7
+    
 endmodule
