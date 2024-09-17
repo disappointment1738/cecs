@@ -25,8 +25,20 @@ module ArrMult_4bit(
     mux2to1 m02(.a(a[2]), .b(1'b0), .sel(b[0]), .out(pp[0][2]));
     mux2to1 m03(.a(a[3]), .b(1'b0), .sel(b[0]), .out(pp[0][3]));
     //row 1
+    mux2to1 m10(.a(a[0]), .b(1'b0), .sel(b[1]), .out(pp[1][0]));
+    mux2to1 m11(.a(a[1]), .b(1'b0), .sel(b[1]), .out(pp[1][1]));
+    mux2to1 m12(.a(a[2]), .b(1'b0), .sel(b[1]), .out(pp[1][2]));
+    mux2to1 m13(.a(a[3]), .b(1'b0), .sel(b[1]), .out(pp[1][3]));
     //row 2
+    mux2to1 m20(.a(a[0]), .b(1'b0), .sel(b[2]), .out(pp[2][0]));
+    mux2to1 m21(.a(a[1]), .b(1'b0), .sel(b[2]), .out(pp[2][1]));
+    mux2to1 m22(.a(a[2]), .b(1'b0), .sel(b[2]), .out(pp[2][2]));
+    mux2to1 m23(.a(a[3]), .b(1'b0), .sel(b[2]), .out(pp[2][3]));
     //row 3
+    mux2to1 m30(.a(a[0]), .b(1'b0), .sel(b[3]), .out(pp[3][0]));
+    mux2to1 m31(.a(a[1]), .b(1'b0), .sel(b[3]), .out(pp[3][1]));
+    mux2to1 m32(.a(a[2]), .b(1'b0), .sel(b[3]), .out(pp[3][2]));
+    mux2to1 m33(.a(a[3]), .b(1'b0), .sel(b[3]), .out(pp[3][3]));
 
     //Assign Adding Circuit
     //sum 0
