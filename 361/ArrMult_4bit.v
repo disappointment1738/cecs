@@ -49,7 +49,7 @@ module ArrMult_4bit(
     FA f0(.a(pp[1][1]), .b(pp[0][2]), .c_in(carry[0]), .c_out(carry[1]), .sum(partialSum[0]));
     HA h1(.a(pp[2][0]), .b(partialSum[0]), .c_out(carry[2]), .sum(prod[2]));
     //sum 3
-    HA h2(.a(carry[2]), .b(carry[1]), .c_out(carry[3]), .sum(partialSum[1]) );
+    HA h2( .a(carry[2]), .b(carry[1]), .c_out(carry[3]), .sum(partialSum[1]) );
     FA f1( .a(pp[1][2]), .b(pp[0][3]), .c_in(partialSum[1]), .c_out(carry[4]), .sum(partialSum[2]) ); 
     FA f2( .a(pp[3][0]), .b(pp[2][1]), .c_in(partialSum[2]), .c_out(carry[5]), .sum(sum[3]) );
     //sum 4
@@ -58,9 +58,8 @@ module ArrMult_4bit(
     HA h3( .a(pp[3][1]), .b(partialSum[4]), .c_out(carry[6]), .sum(sum[4]) );
     //sum 5
     FA f5( .a(carry[4]), .b(carry[5]), .c_in(carry[6]), .c_out(carry[7]), .sum(partialSum[5])  );
-    FA f6( .a(pp[3][2]), .b(pp[2][3]), .c_in(carry[7]), .c_out(), .sum(sum[5]) );
+    FA f6( .a(pp[3][2]), .b(pp[2][3]), .c_in(carry[7]), .c_out(carry[8]), .sum(sum[5]) );
     //sum 6 & sum 7
-    FA f7();
-    FA f8();
+    FA f7( .a(pp[3][3]), .b(carry[7]), .c_in(carry[8]), .c_out(sum[7]), .sum(sum[6]) );
     
 endmodule
