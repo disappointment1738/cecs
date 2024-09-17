@@ -19,7 +19,26 @@ module ArrMult_4bit_tb();
     a_tb = 4'b1101;
     b_tb = 4'b1001;
     #10
-    // Continute With Other Testcases
+
+    a_tb = 4'b1001;
+    b_tb = 4'b1101;
+    #10
+
+    a_tb = 4'b0110;
+    b_tb = 4'b0111;
+    #10
+
+    a_tb = 4'b0101;
+    b_tb = 4'b1010;
+    #10
+
+    a_tb = 4'b0111;
+    b_tb = 4'b0011;
+    #10
+
+    a_tb = 4'b1110;
+    b_tb = 4'b0111;
+    #10
     $finish;
   end
 endmodule
