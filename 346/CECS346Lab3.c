@@ -12,7 +12,7 @@
 
 // Registers for switches
 // Complete the following register definitions
-#define SENSOR									  // bit addresses for the two switches/Sensors: bits 2&3
+#define SENSOR									(*((volatile unsigned long *)0x40004018))  // bit addresses for the two switches/Sensors: bits 2&3
 #define GPIO_PORTA_DATA_R       (*((volatile unsigned long *)0x400043FC))
 #define GPIO_PORTA_DIR_R        (*((volatile unsigned long *)0x40004400))
 #define GPIO_PORTA_AFSEL_R      (*((volatile unsigned long *)0x40004420))
@@ -22,7 +22,7 @@
 #define GPIO_PORTA_PDR_R        (*((volatile unsigned long *)0x40004514))
 
 //// Registers for LEDs
-#define LIGHT                   // bit addresses for the four LEDs
+#define LIGHT                   (*((volatile unsigned long *)0x4002403C))  // bit addresses for the four LEDs
 #define GPIO_PORTE_DIR_R        (*((volatile unsigned long *)0x40024400))
 #define GPIO_PORTE_AFSEL_R      (*((volatile unsigned long *)0x40024420))
 #define GPIO_PORTE_DEN_R        (*((volatile unsigned long *)0x4002451C))
@@ -53,8 +53,12 @@ enum my_states {goN, waitN, goE, waitE};
 
 // Output pins are:3(white), 2(red), 1(yellow), 0(green)
 // Input pins are: 1:sw2, 0:sw1 
-STyp FSM[]={
-            };    
+STyp FSM[4]={ //CHANGE OUTPUT
+  {0x21,2,{goN,waitN,goN,waitN}},
+  {0x22, 1,{goE,goE,goE,goE}},
+  {0x0C,2,{goE,goE,waitE,waitE}},
+  {0x14, 1,{goN,goN,goN,goN}}
+};    
 
 int main(void){ 
   uint8_t S;  // index to the current state 
@@ -62,10 +66,16 @@ int main(void){
 	
 	Light_Init();
 	Sensor_Init();
-  S = ?;                     // FSM start with green  
+  S = goN;                     // FSM start with green  
     
   while(1){
-		// Put your FSM engine here
+		LIGHT = FSM[S].Out; // set traffic lights
+    Delay(FSM[S].Time);
+    Input = SENSOR; // read sensors (switches)
+    S = FSM[S].Next[Input];
+    // TODO (?): If SENSOR does not have inputs in the least significant bits, right shift (>>) the bits to
+    //  move them to the least significant bits.
+    // • Make sure the bits in Input count 0, 1, ... in decimal for the Next[Input]line to work as expected
   }
 }
 
