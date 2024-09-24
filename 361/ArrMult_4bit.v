@@ -2,8 +2,8 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: CSULB
-// Engineer: Amin Rezaei
-// Create Date: 08/22/2020 06:59:39 PM
+// Engineer: stephanie lee
+// Create Date: 9/17/24 12:02:46 PM
 // Design Name: 361_Lab1
 // Module Name: ArrMult_4bit
 // Revision 0.01 - File Created
@@ -41,6 +41,7 @@ module ArrMult_4bit(
     mux2to1 m33(.a(a[3]), .b(1'b0), .sel(b[3]), .out(pp[3][3]));
 
     //Assign Adding Circuit
+    //assigning addition
     //sum 0
     assign prod[0] = pp[0][0];
     //sum 1
@@ -48,18 +49,18 @@ module ArrMult_4bit(
     //sum 2
     FA f0(.a(pp[1][1]), .b(pp[0][2]), .c_in(carry[0]), .c_out(carry[1]), .sum(partialSum[0]));
     HA h1(.a(pp[2][0]), .b(partialSum[0]), .c_out(carry[2]), .sum(prod[2]));
-    //sum 3
-    HA h2( .a(carry[2]), .b(carry[1]), .c_out(carry[3]), .sum(partialSum[1]) );
-    FA f1( .a(pp[1][2]), .b(pp[0][3]), .c_in(partialSum[1]), .c_out(carry[4]), .sum(partialSum[2]) ); 
-    FA f2( .a(pp[3][0]), .b(pp[2][1]), .c_in(partialSum[2]), .c_out(carry[5]), .sum(prod[3]) );
+    //sum 3 
+    HA h2(.a(carry[2]), .b(carry[1]), .c_out(carry[3]), .sum(partialSum[1]));
+    FA f1(.a(pp[1][2]), .b(pp[0][3]), .c_in(partialSum[1]), .c_out(carry[4]), .sum(partialSum[2]));
+    FA f2(.a(pp[3][0]), .b(pp[2][1]), .c_in(partialSum[2]), .c_out(carry[5]), .sum(prod[3]));
     //sum 4
-    FA f3( .a(partialSum[1]), .b(carry[4]), .c_in(carry[5]), .c_out(carry[4]), .sum(partialSum[3]) ); 
-    FA f4( .a(pp[2][2]), .b(pp[1][3]), .c_in(partialSum[3]), .c_out(carry[5]), .sum(partialSum[4]) );
-    HA h3( .a(pp[3][1]), .b(partialSum[4]), .c_out(carry[6]), .sum(prod[4]) );
+    FA f3(.a(carry[3]), .b(carry[4]), .c_in(carry[5]), .c_out(carry[6]), .sum(partialSum[3]));
+    FA f4(.a(pp[2][2]), .b(pp[1][3]), .c_in(partialSum[3]), .c_out(carry[7]), .sum(partialSum[4]));
+    HA h3(.a(pp[3][1]), .b(partialSum[4]), .c_out(carry[8]), .sum(prod[4]));    
     //sum 5
-    FA f5( .a(carry[4]), .b(carry[5]), .c_in(carry[6]), .c_out(carry[7]), .sum(partialSum[5])  );
-    FA f6( .a(pp[3][2]), .b(pp[2][3]), .c_in(carry[7]), .c_out(carry[8]), .sum(prod[5]) );
+    FA f5(.a(carry[6]), .b(carry[7]), .c_in(carry[8]), .c_out(carry[9]), .sum(partialSum[5]));
+    FA f6(.a(pp[3][2]), .b(pp[2][3]), .c_in(partialSum[5]), .c_out(carry[10]), .sum(prod[5]));
     //sum 6 & sum 7
-    FA f7( .a(pp[3][3]), .b(carry[7]), .c_in(carry[8]), .c_out(prod[7]), .sum(prod[6]) );
+    FA f7(.a(pp[3][3]), .b(carry[9]), .c_in(carry[10]), .c_out(prod[7]), .sum(prod[6]));
     
 endmodule
