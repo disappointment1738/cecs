@@ -1,6 +1,6 @@
 // CECS346 Lab 3: FSM
 // group 2
-// Team members: Stephanie Lee, Kayla Watt, & Daniel Espinosa
+// Team members: Stephanie Lee, Kayla Watt, Daniel Espinosa, & Basil Elqasass
 // Lab description: ?
 
 // Hardware Design
@@ -12,7 +12,7 @@
 
 // Registers for switches
 // Complete the following register definitions
-#define SENSOR									(*((volatile unsigned long *)0x40004018))  // bit addresses for the two switches/Sensors: bits 2&3
+#define SENSOR									(*((volatile unsigned long *)0x4000403C))  // bit addresses for the two switches/Sensors: bits 2&3
 #define GPIO_PORTA_DATA_R       (*((volatile unsigned long *)0x400043FC))
 #define GPIO_PORTA_DIR_R        (*((volatile unsigned long *)0x40004400))
 #define GPIO_PORTA_AFSEL_R      (*((volatile unsigned long *)0x40004420))
@@ -22,7 +22,7 @@
 #define GPIO_PORTA_PDR_R        (*((volatile unsigned long *)0x40004514))
 
 //// Registers for LEDs
-#define LIGHT                   (*((volatile unsigned long *)0x4002403C))  // bit addresses for the four LEDs
+#define LIGHT                   (*((volatile unsigned long *)0x400243FC))  // bit addresses for the four LEDs
 #define GPIO_PORTE_DIR_R        (*((volatile unsigned long *)0x40024400))
 #define GPIO_PORTE_AFSEL_R      (*((volatile unsigned long *)0x40024420))
 #define GPIO_PORTE_DEN_R        (*((volatile unsigned long *)0x4002451C))
@@ -33,7 +33,7 @@
 // Constants definitions
 #define SYSCTL_RCGC2_GPIOE      0x00000010  // port E Clock Gating Control
 #define SYSCTL_RCGC2_GPIOA      0x00000001  // port A Clock Gating Control
-#define HALF_SEC  (0)   							// TODO: define the constant for generating 0.5 second delay
+#define HALF_SEC  500000UL 							// TODO: define the constant for generating 0.5 second delay
 
 void Delay(uint8_t n);
 void Light_Init(void);
@@ -73,9 +73,6 @@ int main(void){
     Delay(FSM[S].Time);
     Input = SENSOR; // read sensors (switches)
     S = FSM[S].Next[Input];
-    // TODO (?): If SENSOR does not have inputs in the least significant bits, right shift (>>) the bits to
-    //  move them to the least significant bits.
-    // • Make sure the bits in Input count 0, 1, ... in decimal for the Next[Input]line to work as expected
   }
 }
 
